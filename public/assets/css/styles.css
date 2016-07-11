@@ -1,0 +1,40 @@
+body {
+  background-color: #eee;
+  padding-top: 50px; 
+}
+
+
+.container {
+  position: relative;
+}
+
+.debug label, .inventory label {
+	color: #fff;
+}
+
+.debug {
+	margin-right: 10px;
+}
+
+
+pre#inventoryFile {
+  height: calc(123px * 5 - 115px); /* 5 panels */
+}
+
+pre {
+  min-height: 40px;
+  background: #dde4e9;
+  border-left: 5px solid #558abb;
+  font-family: Consolas,Monaco,'Andale Mono',monospace;
+}
+
+
+.action-button {
+	margin: 0 5px 5px 0;
+}
+
+#inventoryFile {
+	height: 250px; 
+	overflow: scroll;
+}
+

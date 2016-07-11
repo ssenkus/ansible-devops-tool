@@ -16,6 +16,12 @@ For simplicity, I am assuming you have a fresh Ubuntu 14.04 server.
 
 ## Installation
 
+* Install git: `sudo apt-get install git`
+* Install Node.js: `sudo apt-get install nodejs`
+* Install NPM: `sudo apt-get install npm`
+
+NOTE: node.js will be using an old stable version.  If you need a later release, you will need to perform additional steps.
+
 ### Install Ansible on your remote server
 
 From the Ansible Website, here is a list of commands for fetching the latest release of Ansible on Ubuntu:
@@ -27,18 +33,24 @@ From the Ansible Website, here is a list of commands for fetching the latest rel
 Verify your installed Ansible version is the latest version (2.1.0.0):
 * `ansible --version`
 
+**NOTE:** Make sure you get the latest version of Ansible, as they have made significant improvements over previous versions (especially regarding Windows modules).
+
 ### Project Installation
 
-Clone the repository onto a Linux server.
-Run `npm install` inside the root directory of the cloned repository to install the Node.js packages you will need to run the server-side application and public dashboard.
+* Create the project directory:  `mkdir /var/www`
+* Change to this directory: `cd /var/www`
+* Clone this repository: `git clone https://github.com/ssenkus/ansible-devops-tool.git`
+* Change to repository directory: `cd ansible-devops-tool`
+* Install project dependencies with NPM: `npm install`
 
-TODO
+**TODO** - verify on a fresh server
+
 
 ## Setup & Configuration
 
-TODO
+**TODO**
 
 ### Usage
 
-TODO
+**TODO**
 

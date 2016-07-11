@@ -1,0 +1,13 @@
+{
+	"inventories": [
+		"appdev",
+		"test",
+		"load",
+		"PRODUCTION"
+	],
+	"tasks": {
+		"Pinger": {
+			"Ping": ["ping"]
+		},
+	}
+}

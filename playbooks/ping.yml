@@ -1,8 +1,8 @@
 ---
 - name: Ping 
   hosts: servers
-  gather_facts: no
+  gather_facts: yes
   tasks:
   - name: ping
-    win_ping:
+    ping:
 

@@ -35,6 +35,11 @@
 				</ul>
 				<form class="navbar-form navbar-right">
 					<div class="form-group">
+						<label for="scroll_playbook_output" style="color: #fff;">Scroll Output</label>
+						<input id="scroll_playbook_output" type="checkbox" ng-checked="outputScrollEnabled" ng-model="outputScrollEnabled" />
+
+					</div>
+					<div class="form-group">
 						<div class="debug">
 							<label for="debug">Debug</label>
 							<input id="debug" type="checkbox" ng-checked="debug" ng-model="debug" />

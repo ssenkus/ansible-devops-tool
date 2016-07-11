@@ -27,6 +27,7 @@ AnsibleApp.controller('MainCtrl',
 			$scope.command_output = '';
 			$scope.debug = true;
 			$scope.title = null;
+			$scope.outputScrollEnabled = false;
 
 			$scope.initialize = function () {
 				setSelectedProfile();
@@ -102,8 +103,7 @@ AnsibleApp.controller('MainCtrl',
 				socket.emit('command', {
 					name: name,
 					debug: $scope.debug,
-					inventoryFile: $scope.inventory,
-					inventoryDirectory: selectedProfile.inventoryDirectory,
+					inventoryFile: $scope.inventory,	
 					playbooks: playbooks,
 					input: input.trim()
 				});
@@ -159,9 +159,12 @@ AnsibleApp.controller('MainCtrl',
 								$scope.command_output +
 								ansi_up.ansi_to_html(data.output)
 							);
-							$timeout(function() {
-								window.scrollTo(0, document.body.scrollHeight);
-							}, 100);
+
+							if ($scope.outputScrollEnabled == true) {
+								$timeout(function() {
+									window.scrollTo(0, document.body.scrollHeight);
+								}, 100);
+							}
 						}
 					});
 				});

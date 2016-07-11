@@ -8,7 +8,8 @@
 	"tasks": {
 		"Pinger": {
 			"Ping": ["ping"],
-			"Win Ping": ["win_ping"]
+			"Win Ping": ["win_ping"],
+			"All Pings": ["ping", "win_ping"]
 		}
 	}
 }

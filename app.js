@@ -61,7 +61,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use(express.static('public'));
 
 app.get('/', auth, function(req, res) {
-	fs.createReadStream('./public/assets/index.html').pipe(res)
+	fs.createReadStream('./public/index.html').pipe(res)
 });
 
 

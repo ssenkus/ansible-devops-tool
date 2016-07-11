@@ -8,6 +8,6 @@
 	"tasks": {
 		"Pinger": {
 			"Ping": ["ping"]
-		},
+		}
 	}
 }

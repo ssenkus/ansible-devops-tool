@@ -92,7 +92,7 @@ io.on('connection', function (socket) {
 		data.playbooks.forEach(function(el, i)	{
 			var command = [
 				'ansible-playbook',
-				'-i ./inventory/' +  data.inventoryDirectory + '/' + data.inventoryFile,
+				'-i ./inventory/' + data.inventoryFile,
 				'./playbooks/' + el + '.yml'
 			];
 			if (data.debug) {

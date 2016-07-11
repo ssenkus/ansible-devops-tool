@@ -17,10 +17,6 @@ body {
 }
 
 
-pre#inventoryFile {
-  height: calc(123px * 5 - 115px); /* 5 panels */
-}
-
 pre {
   min-height: 40px;
   background: #dde4e9;
@@ -34,7 +30,7 @@ pre {
 }
 
 #inventoryFile {
-	height: 250px; 
+	height: 100px; 
 	overflow: scroll;
 }
 

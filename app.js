@@ -69,8 +69,8 @@ app.get('/inventory', auth, function(req, res) {
 	var inventoryFile = req.query.inventoryFile,
 		inventoryDirectory = req.query.inventoryDirectory
 
-	if (inventoryFile && inventoryDirectory) {
-		fs.readFile('./inventory/' + inventoryDirectory + '/' + inventoryFile, 'utf8', function (err,data) {
+	if (inventoryFile) {
+		fs.readFile('./inventory/' + inventoryFile, 'utf8', function (err,data) {
 			if (err) {
 				return console.log('error', err);
 			}

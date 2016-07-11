@@ -1,9 +1,9 @@
 {
-  "name": "ansible_devops",
+  "name": "ansible_devops_tool",
   "description": "Run ansible playbooks from web interface.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodejs app.js"
   },
   "dependencies": {
     "basic-auth": "~1.0.3",

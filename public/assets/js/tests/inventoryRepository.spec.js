@@ -7,7 +7,6 @@ describe('inventoryRepository', function() {
 
     beforeEach(module('AnsibleApp'));
 
-
     beforeEach(inject(function($httpBackend, inventoryRepository) {
         _httpBackend = $httpBackend;
         _inventoryRepository = inventoryRepository;
@@ -19,7 +18,6 @@ describe('inventoryRepository', function() {
     });
 
     it('should throw error if options are not set', function() {
-        // test for throwing an error
        expect(function() {
            _inventoryRepository.getInventory({})
        }).toThrow('No options when getting inventory');

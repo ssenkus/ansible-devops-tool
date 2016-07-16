@@ -1,7 +1,4 @@
-var AnsibleApp = angular.module('AnsibleApp', []);
-
-
-AnsibleApp.controller('MainCtrl', 
+AnsibleApp.controller('MainCtrl',
 	['$scope', '$http', '$sce', '$timeout',
 		function($scope, $http, $sce, $timeout) {
 

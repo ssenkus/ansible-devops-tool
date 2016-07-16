@@ -1,0 +1,14 @@
+{
+  "name": "ansible-devops-tool-frontend-tests",
+  "author": {},
+  "description": "Karma JS tests for Ansible DevOps Tool Frontend",
+  "version": "0.0.1",
+  "devDependencies": {
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.9",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-ie-launcher": "^0.1.5",
+    "karma-jasmine": "^1.0.2"
+  }
+}

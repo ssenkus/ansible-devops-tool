@@ -15,9 +15,9 @@ describe('inventoryRepository', function() {
 
 
     it('should throw an error if an inventory is not selected', function() {
-
-
+        // test for throwing an error
         expect(false).toBe(true);
+
     });
 
 });

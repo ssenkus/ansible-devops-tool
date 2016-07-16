@@ -1,8 +1,6 @@
 AnsibleApp.controller('MainCtrl',
-    ['$scope', '$http', '$sce', '$timeout', 'inventoryRepository', 'profileRepository', 'dialogManager', 'socketHandler',
-        function($scope, $http, $sce, $timeout, inventoryRepository, profileRepository, dialogManager, socketHandler) {
-
-            var selectedProfile = null;
+    ['$scope', '$http', '$sce', '$timeout', '$log', 'inventoryRepository', 'profileRepository', 'dialogManager', 'socketHandler',
+        function ($scope, $http, $sce, $timeout, $log, inventoryRepository, profileRepository, dialogManager, socketHandler) {
 
             $scope.command_output = '';
             $scope.debug = true;
@@ -10,68 +8,44 @@ AnsibleApp.controller('MainCtrl',
             $scope.outputScrollEnabled = false;
 
             $scope.initialize = function () {
-                // todo: add stuff to profileRepo
                 profileRepository.initialize();
-                // add these two to profile repo
-                setPageTitle();
-                
-                initializeAppFromDataFile();
-                
-                socketHandler.connectSocketIo();
-                socketHandler.registerSocketHandlers(function (data) {
-                    $scope.$apply(function() {
-                        if (data.done) {
-                            $scope.actionClicked = false;
-                            dialogManager.showPlaybooksEnd();
-                        } else {
-                            // todo: this should eventually be a directive
-                            $scope.command_output = $sce.trustAsHtml(
-                                $scope.command_output +
-                                ansi_up.ansi_to_html(data.output)
-                            );
 
-                            if ($scope.outputScrollEnabled == true) {
-                                $timeout(function() {
-                                    window.scrollTo(0, document.body.scrollHeight);
-                                }, 100);
-                            }
-                        }
-                    });
-                });
+                setPageTitle();
+                initializeAppFromDataFile();
+                setupSocketCommunication();
             };
 
-            $scope.bodyClasses = function() {
+            $scope.bodyClasses = function () {
                 var classes = [];
                 classes.push(profileRepository.getBodyClass());
                 return classes;
             };
 
-            $scope.getInventoryFile = function() {
+            $scope.getInventoryFile = function () {
                 inventoryRepository.getInventory({
                     inventoryFile: $scope.inventory
-                }).then(function(response) {
+                }).then(function (response) {
                     $scope.selectedInventoryFile = response.data.fileContents;
-                }, function() {
-                    console.log('There was an error getting inventory file!!!');
+                }, function () {
+                    $log('There was an error getting inventory file!!!');
                 });
             };
 
-
             // convert to directive
-            $scope.hoverOverTask = function(playbooks) {
+            $scope.hoverOverTask = function (playbooks) {
                 if (!$scope.actionClicked) {
                     $scope.pbs = playbooks;
                 }
             };
 
             // convert to directive
-            $scope.hoverOutTask = function() {
+            $scope.hoverOutTask = function () {
                 if (!$scope.actionClicked) {
                     $scope.pbs = null;
                 }
             };
 
-            $scope.action = function(name, playbooks) {
+            $scope.action = function (name, playbooks) {
                 var input = '';
                 $scope.actionClicked = true;
                 $scope.pbs = playbooks;
@@ -89,15 +63,6 @@ AnsibleApp.controller('MainCtrl',
                     }
                 }
 
-                if (!_.isArray(playbooks)) {
-                    for (key in playbooks) {
-                        playbooks[key].forEach(function(el) {
-                            input += el + "=" + prompt("Input for '" + el + "'.") + " ";
-                        });
-                    }
-                    playbooks = _.keys(playbooks);
-                }
-
                 $scope.command_output = '';
 
                 socketHandler.sendCommand({
@@ -109,20 +74,42 @@ AnsibleApp.controller('MainCtrl',
                 });
             };
 
-            function initializeAppFromDataFile() {
-                profileRepository.getDataFile().then(function(response) {
-                    $scope.tasks = response.data.tasks;
-                    $scope.inventories = response.data.inventories;
-                    $scope.inventory = null;
+            function setupSocketCommunication() {
+                socketHandler.connectSocketIo();
+                socketHandler.registerSocketHandlers(function (data) {
+                    $scope.$apply(function () {
+                        if (data.done) {
+                            $scope.actionClicked = false;
+                            dialogManager.showPlaybooksEnd();
+                        } else {
+                            // todo: this should eventually be a directive
+                            $scope.command_output = $sce.trustAsHtml(
+                                $scope.command_output +
+                                ansi_up.ansi_to_html(data.output)
+                            );
+
+                            if ($scope.outputScrollEnabled == true) {
+                                $timeout(function () {
+                                    window.scrollTo(0, document.body.scrollHeight);
+                                }, 100);
+                            }
+                        }
+                    });
                 });
             }
 
-            function getProfileTitle() {
-                return profileRepository.getPageTitle();
+            function initializeAppFromDataFile() {
+                profileRepository.getDataFile().then(function (response) {
+                    $scope.tasks = response.data.tasks;
+                    $scope.inventories = response.data.inventories;
+                    $scope.inventory = null;
+                }, function () {
+                    $log('something went wrong');
+                });
             }
-            
+
             function setPageTitle() {
-                $scope.title = getProfileTitle();
+                $scope.title = profileRepository.getPageTitle();
             }
 
             function resetUi() {

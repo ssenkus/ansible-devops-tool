@@ -1,19 +1,31 @@
-AnsibleApp.factory('profileRepository', [function() {
+AnsibleApp.factory('profileRepository', ['$http', function ($http) {
 
-    var  defaultProfile = {
+    var defaultProfile = {
         dataFile: './data.json',
-            bodyClass: 'dev',
-            pageTitle: 'Ansible DevOps Tool'
+        bodyClass: 'dev',
+        pageTitle: 'Ansible DevOps Tool'
     };
+    
+    var selectedProfile;
+    
     var profileRepository = {
-        initialize: function() {
+        initialize: function () {
+            this.getDefaultProfile();
         },
-        getDataFile: function() {},
-        getDefaultProfile: function() {
+        getDataFile: function () {
+            return $http.get(defaultProfile.dataFile);
+        },
+        getDefaultProfile: function () {
             return defaultProfile;
+        },
+        getPageTitle: function() {
+            return defaultProfile.pageTitle;
+        },
+        getBodyClass: function() {
+            return defaultProfile.bodyClass;
         }
-    };
 
+    };
 
     return profileRepository;
 }]);

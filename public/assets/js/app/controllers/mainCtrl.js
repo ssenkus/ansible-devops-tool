@@ -2,16 +2,7 @@ AnsibleApp.controller('MainCtrl',
     ['$scope', '$http', '$sce', '$timeout', 'inventoryRepository', 'profileRepository', 'dialogManager', 'socketHandler',
         function($scope, $http, $sce, $timeout, inventoryRepository, profileRepository, dialogManager, socketHandler) {
 
-            var profiles = {
-                defaultProfile: {
-                    dataFile: './data.json',
-                    bodyClass: 'dev',
-                    pageTitle: 'Ansible DevOps Tool'
-                }
-            };
-
-            var selectedProfile = null,
-                socket = null;
+            var selectedProfile = null;
 
             $scope.command_output = '';
             $scope.debug = true;
@@ -22,9 +13,7 @@ AnsibleApp.controller('MainCtrl',
                 // todo: add stuff to profileRepo
                 profileRepository.initialize();
                 // add these two to profile repo
-                setSelectedProfile();
                 setPageTitle();
-                
                 
                 initializeAppFromDataFile();
                 
@@ -35,6 +24,7 @@ AnsibleApp.controller('MainCtrl',
                             $scope.actionClicked = false;
                             dialogManager.showPlaybooksEnd();
                         } else {
+                            // todo: this should eventually be a directive
                             $scope.command_output = $sce.trustAsHtml(
                                 $scope.command_output +
                                 ansi_up.ansi_to_html(data.output)
@@ -52,7 +42,7 @@ AnsibleApp.controller('MainCtrl',
 
             $scope.bodyClasses = function() {
                 var classes = [];
-                classes.push(selectedProfile.bodyClass);
+                classes.push(profileRepository.getBodyClass());
                 return classes;
             };
 
@@ -61,6 +51,8 @@ AnsibleApp.controller('MainCtrl',
                     inventoryFile: $scope.inventory
                 }).then(function(response) {
                     $scope.selectedInventoryFile = response.data.fileContents;
+                }, function() {
+                    console.log('There was an error getting inventory file!!!');
                 });
             };
 
@@ -118,8 +110,7 @@ AnsibleApp.controller('MainCtrl',
             };
 
             function initializeAppFromDataFile() {
-                var dataFile = getProfileDataFile();
-                $http.get(dataFile).then(function(response) {
+                profileRepository.getDataFile().then(function(response) {
                     $scope.tasks = response.data.tasks;
                     $scope.inventories = response.data.inventories;
                     $scope.inventory = null;
@@ -127,20 +118,9 @@ AnsibleApp.controller('MainCtrl',
             }
 
             function getProfileTitle() {
-                // todo add repo method
-                return selectedProfile.pageTitle;
+                return profileRepository.getPageTitle();
             }
-
-            function getProfileDataFile() {
-                // todo
-                profileRepository.getDataFile();
-                return selectedProfile.dataFile;
-            }
-
-            function setSelectedProfile() {
-                selectedProfile = profileRepository.getDefaultProfile();
-            }
-
+            
             function setPageTitle() {
                 $scope.title = getProfileTitle();
             }
@@ -149,7 +129,6 @@ AnsibleApp.controller('MainCtrl',
                 $scope.actionClicked = false;
                 $scope.pbs = null;
             }
-
 
         }
     ]);

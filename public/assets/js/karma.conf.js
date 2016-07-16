@@ -15,8 +15,21 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'app/services/inventoryRepository.js',
-      'tests/**/*.spec.js'
+        // Application vendor files
+        'app/vendor/angular.min.js',
+        'app/vendor/ansi_up.js',
+        'app/vendor/lodash.min.js',
+        'app/vendor/socket.io.min.js',
+        'app/modules/ansibleApp.js',
+        // Application project files
+        'app/app.js',
+        'app/services/inventoryRepository.js',
+        //  Test vendor files
+        'app/vendor/angular-mocks.js',
+        //  Test configuration
+        'tests/config/testMain.js',
+        //  Test specs
+        'tests/**/*.spec.js'
     ],
 
 

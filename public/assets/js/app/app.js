@@ -10,11 +10,6 @@ AnsibleApp.controller('MainCtrl',
 				}
 			};
 
-
-
-
-	
-			
 			
 			var selectedProfile = null,
 			    socket = null;

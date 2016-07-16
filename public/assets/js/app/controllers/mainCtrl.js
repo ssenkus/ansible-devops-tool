@@ -46,7 +46,7 @@ AnsibleApp.controller('MainCtrl',
             };
 
             $scope.action = function (name, playbooks) {
-                var input = '';
+
                 $scope.actionClicked = true;
                 $scope.pbs = playbooks;
 
@@ -63,16 +63,19 @@ AnsibleApp.controller('MainCtrl',
                     }
                 }
 
-                $scope.command_output = '';
-
+                resetCommandOutput();
                 socketHandler.sendCommand({
                     name: name,
                     debug: $scope.debug,
                     inventoryFile: $scope.inventory,
                     playbooks: playbooks,
-                    input: input.trim()
+                    input: ''
                 });
             };
+
+            function resetCommandOutput() {
+                $scope.command_output = '';
+            }
 
             function setupSocketCommunication() {
                 socketHandler.connectSocketIo();

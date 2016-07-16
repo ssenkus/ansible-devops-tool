@@ -13,13 +13,6 @@ AnsibleApp.factory('socketHandler', [function() {
     }
 
     $scope.command_output = '';
-    socket.emit('command', {
-        name: name,
-        debug: $scope.debug,
-        inventoryFile: $scope.inventory,
-        playbooks: playbooks,
-        input: input.trim()
-    });
 */
     var socketHandler = {
         connectSocketIo: function() {

@@ -17,13 +17,12 @@ AnsibleApp.factory('dialogManager', [function () {
             alert(messages.selectEnvironment);
         },
         confirmProductionEnvironmentSelection: function () {
-            !confirm(messages.productionWarning);
+            return confirm(messages.productionWarning);
         },
         showPlaybooksEnd: function( ) {
             alert(messages.playbooksFinished);
         }
     };
-
 
     return dialogManager;
 }]);

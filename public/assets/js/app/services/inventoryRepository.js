@@ -1,26 +1,31 @@
 AnsibleApp.factory('inventoryRepository', ['$http', function($http) {
 
+    function hasValidOptions(options) {
+        return (options && options.inventoryFile);
+    }
 
-    var inventoryEndpoint = '/inventory';
-    
-    
-    var inventoryRepository = {
+    function requestInventoryFile(options   ) {
+       return $http({
+            method: 'GET',
+            url: inventoryEndpoint,
+            params: {
+                inventoryFile: options.inventoryFile
+            }
+        });
+    }
+
+    var inventoryEndpoint = '/inventory',
+        inventoryRepository = {
 
         getInventory: function(options) {
-            if (!options) {
+
+            if (!hasValidOptions(options)) {
                 throw "No options when getting inventory";
             }
 
-            return $http({
-                method: 'GET',
-                url: inventoryEndpoint,
-                params: {
-                    inventoryFile: options.inventoryFile
-                }
-            });
-            
+            return requestInventoryFile(options);
         }
     };
-    
+
     return inventoryRepository;
 }]);

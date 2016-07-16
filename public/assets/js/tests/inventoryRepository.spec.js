@@ -13,11 +13,23 @@ describe('inventoryRepository', function() {
         _inventoryRepository = inventoryRepository;
     }));
 
-
-    it('should throw an error if an inventory is not selected', function() {
-        // test for throwing an error
-        expect(false).toBe(true);
-
+    afterEach(function() {
+        _httpBackend.verifyNoOutstandingRequest();
+        _httpBackend.verifyNoOutstandingExpectation();
     });
+
+    it('should throw error if options are not set', function() {
+        // test for throwing an error
+       expect(function() {
+           _inventoryRepository.getInventory({})
+       }).toThrow('No options when getting inventory');
+    });
+
+    it('should make a request to the middleware', function() {
+        _inventoryRepository.getInventory({ inventoryFile: 'test'});
+        _httpBackend.expectGET('/inventory?inventoryFile=test').respond();
+        _httpBackend.flush();
+    });
+
 
 });

@@ -1,4 +1,4 @@
-AnsibleApp.factory('dialogManager', [function () {
+angular.module('AnsibleApp').factory('dialogManager', [function () {
 
     var productionWarningMessage = [
         "==WARNING==",

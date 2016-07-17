@@ -16,13 +16,13 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         // Application vendor files
-        'app/vendor/angular.min.js',
+        'app/vendor/angular.js',
         'app/vendor/ansi_up.js',
         'app/vendor/lodash.min.js',
         'app/vendor/socket.io.min.js',
         'app/modules/ansibleApp.js',
         // Application project files
-        'app/services/inventoryRepository.js',
+        'app/services/*.js',
         //  Test vendor files
         'app/vendor/angular-mocks.js',
         //  Test configuration
@@ -40,13 +40,17 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+        'app/modules/*.js': ['coverage'],
+        'app/controllers/*.js': ['coverage'],
+        'app/services/*.js': ['coverage'],
+        'app/directives/*.js': ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['dots', 'coverage'],
 
 
     // web server port

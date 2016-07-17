@@ -1,4 +1,4 @@
-AnsibleApp.factory('socketHandler', [function() {
+angular.module('AnsibleApp').factory('socketHandler', ['CONFIG', function(CONFIG) {
 
     var socket = null;
 
@@ -16,9 +16,10 @@ AnsibleApp.factory('socketHandler', [function() {
 */
     var socketHandler = {
         connectSocketIo: function() {
-            socket = io.connect('http://' + window.location.hostname + ':3000');
+            socket = io.connect(CONFIG.SOCKET_ENDPOINT);
         },
         registerSocketHandlers: function(callback) {
+            this.connectSocketIo();
             socket.on('out', callback);
         },
         sendCommand: function(options) {

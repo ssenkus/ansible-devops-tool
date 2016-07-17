@@ -1,9 +1,7 @@
 describe('inventoryRepository', function() {
-
-
+    
     var _inventoryRepository,
         _httpBackend;
-
 
     beforeEach(module('AnsibleApp'));
 
@@ -29,5 +27,16 @@ describe('inventoryRepository', function() {
         _httpBackend.flush();
     });
 
+    it('should detect when a user has not selected an inventory', function() {
+        var givenInventory;
+        var emptyInventory = _inventoryRepository.isInventoryEmpty(givenInventory);
+        expect(emptyInventory).toBe(true);
+    });
+
+    it('should detect a production inventory', function() {
+        var givenInventory = 'production';
+        var isProductionInventory = _inventoryRepository.isProductionInventory(givenInventory);
+        expect(isProductionInventory).toBe(true);
+    });
 
 });

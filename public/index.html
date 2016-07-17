@@ -7,20 +7,22 @@
 	<title>Ansible DevOps Tool</title>
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="assets/css/styles.css" rel="stylesheet" />
-	<script src="assets/js/app/vendor/angular.min.js"></script>
+	<script src="assets/js/app/vendor/angular.js"></script>
 	<script src="assets/js/app/vendor/lodash.min.js"></script>
 	<script src="assets/js/app/vendor/socket.io.min.js"></script>
 	<script src="assets/js/app/vendor/ansi_up.js"></script>
 	<script src="assets/js/app/modules/ansibleApp.js"></script>
+    <script src="assets/js/app/config/config.js"></script>
     <script src="assets/js/app/services/inventoryRepository.js"></script>
     <script src="assets/js/app/services/mongoRepository.js"></script>
     <script src="assets/js/app/services/profileRepository.js"></script>
     <script src="assets/js/app/services/dialogManager.js"></script>
     <script src="assets/js/app/services/socketHandler.js"></script>
+    <script src="assets/js/app/directives/pageDisplayManager.js"></script>
     <script src="assets/js/app/controllers/mainCtrl.js"></script>
 </head>
 
-<body ng-controller="MainCtrl" ng-init="initialize()" ng-class="bodyClasses()">
+<body ng-controller="MainCtrl" ng-init="initialize()" ng-class="bodyClasses()" page-display-manager>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">

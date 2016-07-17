@@ -1,4 +1,4 @@
-AnsibleApp.controller('MainCtrl',
+angular.module('AnsibleApp').controller('MainCtrl',
     ['$scope', '$http', '$sce', '$timeout', '$log', 'inventoryRepository', 'profileRepository', 'dialogManager', 'socketHandler',
         function ($scope, $http, $sce, $timeout, $log, inventoryRepository, profileRepository, dialogManager, socketHandler) {
 
@@ -8,17 +8,10 @@ AnsibleApp.controller('MainCtrl',
             $scope.outputScrollEnabled = false;
 
             $scope.initialize = function () {
-                profileRepository.initialize();
+                //profileRepository.initialize();
 
-                setPageTitle();
                 initializeAppFromDataFile();
                 setupSocketCommunication();
-            };
-
-            $scope.bodyClasses = function () {
-                var classes = [];
-                classes.push(profileRepository.getBodyClass());
-                return classes;
             };
 
             $scope.getInventoryFile = function () {
@@ -78,7 +71,7 @@ AnsibleApp.controller('MainCtrl',
             }
 
             function setupSocketCommunication() {
-                socketHandler.connectSocketIo();
+              
                 socketHandler.registerSocketHandlers(function (data) {
                     $scope.$apply(function () {
                         if (data.done) {
@@ -111,9 +104,7 @@ AnsibleApp.controller('MainCtrl',
                 });
             }
 
-            function setPageTitle() {
-                $scope.title = profileRepository.getPageTitle();
-            }
+
 
             function resetUi() {
                 $scope.actionClicked = false;

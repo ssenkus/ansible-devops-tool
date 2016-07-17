@@ -1,4 +1,4 @@
-AnsibleApp.factory('mongoRepository', [function() {
+angular.module('AnsibleApp').factory('mongoRepository', [function() {
 
 
     var mongoRepository = {

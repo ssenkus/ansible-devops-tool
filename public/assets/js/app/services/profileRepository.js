@@ -1,12 +1,10 @@
-AnsibleApp.factory('profileRepository', ['$http', function ($http) {
+angular.module('AnsibleApp').factory('profileRepository', ['$http', function ($http) {
 
     var defaultProfile = {
         dataFile: './data.json',
         bodyClass: 'dev',
         pageTitle: 'Ansible DevOps Tool'
     };
-    
-    var selectedProfile;
     
     var profileRepository = {
         initialize: function () {

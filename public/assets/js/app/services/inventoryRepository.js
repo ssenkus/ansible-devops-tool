@@ -1,4 +1,4 @@
-AnsibleApp.factory('inventoryRepository', ['$http', function ($http) {
+angular.module('AnsibleApp').factory('inventoryRepository', ['$http', function ($http) {
 
     function hasValidOptions(options) {
         return (options && options.inventoryFile);
@@ -26,7 +26,7 @@ AnsibleApp.factory('inventoryRepository', ['$http', function ($http) {
                 return requestInventoryFile(options);
             },
             isProductionInventory: function (inventory) {
-                return inventory.match(/prod/i);
+                return !!inventory.match(/prod/i);
             },
             isInventoryEmpty: function (inventory) {
                 return !inventory;

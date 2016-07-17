@@ -22,6 +22,7 @@ module.exports = function(config) {
         'app/vendor/socket.io.min.js',
         'app/modules/ansibleApp.js',
         // Application project files
+        'app/config/*.js',
         'app/services/*.js',
         //  Test vendor files
         'app/vendor/angular-mocks.js',

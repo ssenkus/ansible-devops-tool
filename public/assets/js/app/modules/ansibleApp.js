@@ -1,1 +1,1 @@
-var AnsibleApp = angular.module('AnsibleApp', []);
+angular.module('AnsibleApp', []);

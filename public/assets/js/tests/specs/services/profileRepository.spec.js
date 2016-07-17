@@ -10,33 +10,27 @@ describe('profileRepository', function() {
         _profileRepository = profileRepository;
     }));
 
+    beforeEach(function() {
+        _profileRepository.initialize();
+    });
+
     afterEach(function() {
         _httpBackend.verifyNoOutstandingRequest();
         _httpBackend.verifyNoOutstandingExpectation();
     });
-/*
-    it('should throw error if options are not set', function() {
-        expect(function() {
-            _inventoryRepository.getInventory({})
-        }).toThrow('No options when getting inventory');
-    });
 
-    it('should make a request to the middleware', function() {
-        _inventoryRepository.getInventory({ inventoryFile: 'test'});
-        _httpBackend.expectGET('/inventory?inventoryFile=test').respond();
+    it('should fetch the data file', function() {
+        _profileRepository.getDataFile();
+        _httpBackend.expectGET('./data.json').respond();
         _httpBackend.flush();
     });
 
-    it('should detect when a user has not selected an inventory', function() {
-        var givenInventory;
-        var emptyInventory = _inventoryRepository.isInventoryEmpty(givenInventory);
-        expect(emptyInventory).toBe(true);
+    it('should get the page title from the profile', function() {
+        expect(_profileRepository.getPageTitle()).toBe('Ansible DevOps Tool');
     });
 
-    it('should detect a production inventory', function() {
-        var givenInventory = 'production';
-        var isProductionInventory = _inventoryRepository.isProductionInventory(givenInventory);
-        expect(isProductionInventory).toBe(true);
+    it('should get the body class from the profile', function() {
+        expect(_profileRepository.getBodyClass()).toBe('dev');
     });
-*/
+
 });

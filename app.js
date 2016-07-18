@@ -1,11 +1,9 @@
-var fs = require('fs'),
-    express = require('express'),
-    basicAuth = require('basic-auth'),
+var express = require('express'),
     child_process = require('child_process'),
     http = require('http'),
     socketIO = require('socket.io'),
-    bodyParser = require('body-parser');
-
+    bodyParser = require('body-parser'),
+    routes = require('./server/routes/routes.js');
 
 var spawn = child_process.spawn,
     app = express(),
@@ -22,24 +20,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 app.use(express.static('public'));
 
-app.get('/', auth, function (req, res) {
-    fs.createReadStream('./public/index.html').pipe(res)
-});
-
-app.get('/inventory', auth, function (req, res) {
-    var inventoryFile = req.query.inventoryFile;
-
-    if (inventoryFile) {
-        fs.readFile('./inventory/' + inventoryFile, 'utf8', function (err, data) {
-            if (err) {
-                return console.log('error', err);
-            }
-            res.send({fileContents: data});
-        });
-    }
-});
-
-app.post('command');
+routes(app);
 
 
 server.listen(3000, function () {
@@ -73,28 +54,6 @@ io.on('connection', function (socket) {
     });
 });
 
-
-function auth(req, res, next) {
-
-    function unauthorized(res) {
-        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-        return res.sendStatus(401);
-    };
-
-    var user = basicAuth(req);
-
-    if (!user || !user.name || !user.pass) {
-        return unauthorized(res);
-    }
-    ;
-
-    if (user.name === 'testtest' && user.pass === 'automation') {
-        return next();
-    } else {
-        return unauthorized(res);
-    }
-    ;
-}
 
 function runCommands(socket, commands, callback) {
     var command = commands.shift().split(' ');

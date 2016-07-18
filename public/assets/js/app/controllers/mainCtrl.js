@@ -8,8 +8,6 @@ angular.module('AnsibleApp').controller('MainCtrl',
             $scope.outputScrollEnabled = false;
 
             $scope.initialize = function () {
-                //profileRepository.initialize();
-
                 initializeAppFromDataFile();
                 setupSocketCommunication();
             };
@@ -71,7 +69,7 @@ angular.module('AnsibleApp').controller('MainCtrl',
             }
 
             function setupSocketCommunication() {
-              
+
                 socketHandler.registerSocketHandlers(function (data) {
                     $scope.$apply(function () {
                         if (data.done) {
@@ -103,7 +101,6 @@ angular.module('AnsibleApp').controller('MainCtrl',
                     $log('something went wrong');
                 });
             }
-
 
 
             function resetUi() {

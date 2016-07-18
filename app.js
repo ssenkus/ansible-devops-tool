@@ -42,7 +42,6 @@ app.get('/inventory', auth, function (req, res) {
 app.post('command');
 
 
-
 server.listen(3000, function () {
     var port = server.address().port;
     console.log('AnsibleApp listening at http://%s:%s', 'localhost', port);
@@ -73,7 +72,6 @@ io.on('connection', function (socket) {
         });
     });
 });
-
 
 
 function auth(req, res, next) {
@@ -128,17 +126,21 @@ function runCommands(socket, commands, callback) {
 }
 
 function saveCommandOutput(commandOutput) {
+
     console.log(commandOutput);
-    MongoClient.connect('mongodb://localhost:27017/devopsdb', function(err, db) {
+    MongoClient.connect('mongodb://localhost:27017/devopsdb', function (err, db) {
         if (err) {
             throw err;
         }
         console.log('connected to mongo');
 
-        var collection = db.collection('command_output');
+        var collection = db.collection('command_history');
 
         //Test command output
-        var command = {timestamp: Math.floor(new Date() / 1000), output: commandOutput};
+        var command = {
+            timestamp: Math.floor(new Date() / 1000),
+            output: commandOutput
+        };
 
         // Insert some users
         collection.insert(command, function (err, result) {
@@ -146,7 +148,7 @@ function saveCommandOutput(commandOutput) {
             if (err) {
                 console.log(err);
             } else {
-                console.log('Successfully inserted command output to mongodb');
+                console.log('Successfully inserted command output to mongodb collection "command_history"');
             }
 
             db.close();

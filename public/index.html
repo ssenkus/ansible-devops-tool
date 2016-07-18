@@ -2,16 +2,16 @@
 <html ng-app="AnsibleApp">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Ansible DevOps Tool</title>
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="assets/css/styles.css" rel="stylesheet" />
-	<script src="assets/js/app/vendor/angular.js"></script>
-	<script src="assets/js/app/vendor/lodash.min.js"></script>
-	<script src="assets/js/app/vendor/socket.io.min.js"></script>
-	<script src="assets/js/app/vendor/ansi_up.js"></script>
-	<script src="assets/js/app/modules/ansibleApp.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ansible DevOps Tool</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="assets/css/styles.css" rel="stylesheet"/>
+    <script src="assets/js/app/vendor/angular.js"></script>
+    <script src="assets/js/app/vendor/lodash.min.js"></script>
+    <script src="assets/js/app/vendor/socket.io.min.js"></script>
+    <script src="assets/js/app/vendor/ansi_up.js"></script>
+    <script src="assets/js/app/modules/ansibleApp.js"></script>
     <script src="assets/js/app/config/config.js"></script>
     <script src="assets/js/app/services/inventoryRepository.js"></script>
     <script src="assets/js/app/services/mongoRepository.js"></script>
@@ -23,83 +23,87 @@
 </head>
 
 <body ng-controller="MainCtrl" ng-init="initialize()" ng-class="bodyClasses()" page-display-manager>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">{{ title }}</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<!--	<li>
-						<a href="/">Home</a>
-					</li>
-				-->
-				</ul>
-				<form class="navbar-form navbar-right">
-					<div class="form-group">
-						<label for="scroll_playbook_output" style="color: #fff;">Scroll Output</label>
-						<input id="scroll_playbook_output" type="checkbox" ng-checked="outputScrollEnabled" ng-model="outputScrollEnabled" />
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">{{ title }}</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <!--	<li>
+                    <a href="/">Home</a>
+                </li>
+            -->
+            </ul>
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</nav>
 
-					</div>
-					<div class="form-group">
-						<div class="debug">
-							<label for="debug">Debug</label>
-							<input id="debug" type="checkbox" ng-checked="debug" ng-model="debug" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="inventory">
-							<label for="inventory">Environment</label>
-							<select id="inventory" class="form-control" ng-options="item for item in inventories" ng-model="inventory" ng-change="getInventoryFile()"></select>
-						</div>
-					</div>
-				</form>
-			</div>
-			<!--/.navbar-collapse -->
-		</div>
-	</nav>
+<div class="container">
+    <div class="row" style="padding-top: 20px">
+        <div class="col-sm-5 col-md-4 col-lg-3">
+            <h2>Tasks</h2>
+            <div ng-repeat="(task_name,task) in tasks">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{task_name}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a class="btn btn-success action-button" ng-repeat="(name, playbooks) in task"
+                           ng-mouseover="hoverOverTask(playbooks)" ng-mouseout="hoverOutTask()"
+                           ng-click="action(name, playbooks)" ng-disabled="actionClicked" ng-bind="name"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<div class="container">
-		<div class="row" style="padding-top: 20px">
-			<div class="col-sm-5 col-md-4 col-lg-3">
-				<h2>Tasks</h2>
-				<div ng-repeat="(task_name,task) in tasks">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">{{task_name}}</h3>
-						</div>
-						<div class="panel-body">
-							<a class="btn btn-success action-button" ng-repeat="(name, playbooks) in task" ng-mouseover="hoverOverTask(playbooks)" ng-mouseout="hoverOutTask()" ng-click="action(name, playbooks)" ng-disabled="actionClicked" ng-bind="name"></a>
-						</div>
-					</div>
-				</div>
-			</div>
+        <div class="col-sm-7 col-md-8 col-lg-9">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <h2>Playbooks to execute:</h2>
+                <pre id="playbooks_list">{{ pbs }}</pre>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <form>
+                    <div class="form-group">
+                        <div class="inventory">
+                            <label for="inventory">Environment</label>
+                            <select id="inventory" class="form-control" ng-options="item for item in inventories"
+                                    ng-model="inventory" ng-change="getInventoryFile()"></select>
+                        </div>
+                    </div>
+                </form>
+                <pre id="inventoryFile" ng-bind="selectedInventoryFile"></pre>
+            </div>
+        </div>
 
-			<div class="col-sm-7 col-md-8 col-lg-9">
-				<div class="col-sm-12 col-md-12 col-lg-6">
-				<h2>Playbooks to execute:</h2>
-				<pre id="playbooks_list">{{ pbs }}</pre>
-			</div>
-			<div class="col-sm-12 col-md-12 col-lg-6">
-				<h2>Environment: {{ inventory}}</h2>
-				<pre id="inventoryFile" ng-bind="selectedInventoryFile"></pre>
-			</div>
-		</div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>Playbooks output:</h2>
+                <div class="form-group">
+                    <label for="scroll_playbook_output" >Scroll Output</label>
+                    <input id="scroll_playbook_output" type="checkbox" ng-checked="outputScrollEnabled"
+                           ng-model="outputScrollEnabled"/>
 
-		<div class="row">
-			<div class="col-xs-12">
-				<h2>Playbooks output:</h2>
-				<pre class="command_output" ng-bind-html="command_output"></pre>
-			</div>
-		</div>
+                </div>
+                <div class="form-group">
+                    <div class="debug">
+                        <label for="debug">Debug</label>
+                        <input id="debug" type="checkbox" ng-checked="debug" ng-model="debug"/>
+                    </div>
+                </div>
+                <pre class="command_output" ng-bind-html="command_output"></pre>
+            </div>
+        </div>
 
-	</div>
+    </div>
 </body>
 
 </html>

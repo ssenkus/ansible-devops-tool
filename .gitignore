@@ -1,3 +1,4 @@
 node_modules
 npm-debug.log
+/playbooks/*.retry
 /public/assets/js/coverage/
